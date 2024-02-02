@@ -2,15 +2,17 @@ import {lazy} from 'react';
 
 import {Navigate, useRoutes} from 'react-router-dom';
 import pathConstants from "./pathConstants.tsx";
+import Layout from '../../components/Layout.tsx';
 
 const Dashboard = lazy(() => import('../../pages/Dashboard'));
 const Profile = lazy(() => import('../../pages/Profile'));
+
 
 export default function AppRouter() {
     return useRoutes([
         {
             path: "/",
-            element: <Navigate to="/dashboard"/>
+            element: <Layout>{[<Navigate to="/dashboard" />]}</Layout>
         },
         {
             path: pathConstants.LOGIN,

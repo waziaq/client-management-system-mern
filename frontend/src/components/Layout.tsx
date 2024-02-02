@@ -1,10 +1,7 @@
-import { Suspense } from "react";
-import { Outlet } from "react-router-dom"
-
 import Header from "./Header"
 import Sidebar from "./Sidebar";
 
-export default function Layout() {
+const Layout = ({ children }: any) => {
     return (
         <>
             <div className="flex h-screen overflow-hidden">
@@ -13,9 +10,7 @@ export default function Layout() {
                     <Header />
                     <main>
                         <div className="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
-                            <Suspense fallback={<div>Loading...</div>}>
-                                <Outlet />
-                            </Suspense>
+                            { children }
                         </div>
                     </main>
                 </div>
@@ -23,3 +18,5 @@ export default function Layout() {
         </>
     )
 }
+
+export default Layout

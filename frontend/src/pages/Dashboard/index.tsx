@@ -1,9 +1,10 @@
 import * as Icon from "react-feather";
+import Layout from '../../components/Layout';
 
 function Dashboard() {
 
     return (
-        <>
+        <Layout>
             {/*Breadcrumbs*/}
             <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <h2 className="text-2xl font-bold text-black">
@@ -46,7 +47,7 @@ function Dashboard() {
                     </div>
                 </div>
             </div>
-        </>
+        </Layout>
     )
 }
 

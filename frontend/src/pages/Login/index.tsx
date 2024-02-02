@@ -1,20 +1,54 @@
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import PathConstants from "../../config/routes/pathConstants.tsx";
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
+import {useSelector, useDispatch} from "react-redux";
+import {reset} from "../../config/redux/reducer/authReducer";
+import {loginUser} from "../../config/redux/action/authAction";
+import { toast } from "react-toastify";
+import BackdropLoading from "../../components/BackdropLoading/index.tsx";
 
 const Login = () => {
-    const [user, setUser] = useState({email: "", password: ""});
+    const [formData, setFormData] = useState({email: "", password: ""});
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const { user, isError, isSuccess, isLoading, message } = useSelector((state: any) => state.auth);
 
     const handleChangeInput = (e: any) => {
-        setUser({...user, [e.target.name]: e.target.value});
+        setFormData({...formData, [e.target.name]: e.target.value});
     };
+
+    useEffect(() => {
+        if (isError) {
+            toast.error(message);
+        }
+
+        if (isSuccess || user) {
+            navigate(PathConstants.DASHBOARD);
+            toast.success("Login successfully");
+        }
+
+        dispatch(reset());
+    }, [user, isError, isSuccess, message, navigate, dispatch]);
 
     const handleSubmit = (e: any) => {
         e.preventDefault();
 
-        setUser({email: "", password: ""});
+        const userData = {
+            email: formData.email,
+            password: formData.password
+        }
+
+        dispatch(loginUser(userData));
+
+        setFormData({email: "", password: ""});
 
         e.target.reset();
+    }
+
+    if (isLoading) {
+        return <BackdropLoading />;
     }
 
     return (

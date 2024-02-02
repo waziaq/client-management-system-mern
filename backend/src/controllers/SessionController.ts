@@ -12,8 +12,7 @@ export const store = async (req: Request, res: Response) => {
 
         return res.status(200).json({
             token,
-            user: serializedUser,
-            msg: "USER_AUTHENTICATED"
+            data: serializedUser
         });
     } catch (error: any) {
         return res.status(400).json({ error: error.message });

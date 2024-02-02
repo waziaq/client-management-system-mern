@@ -1,8 +1,16 @@
 import * as Icon from "react-feather";
 import { Link } from "react-router-dom";
 import PathConstants from "../config/routes/pathConstants.tsx";
+import { useSelector } from "react-redux";
+import BackdropLoading from "./BackdropLoading/index.tsx";
 
 function Header() {
+    const { user, isLoading } = useSelector((state: any) => state.auth);
+
+    if (isLoading) {
+        return <BackdropLoading />;
+    }
+
     return (
         <>
             <header className="sticky top-0 z-999 flex w-full bg-white drop-shadow">
@@ -23,9 +31,9 @@ function Header() {
                             <Link to={PathConstants.PROFILE} className="flex items-center gap-4">
                                         <span className="hidden text-right lg:block">
                                             <span className="block text-sm font-medium text-black">
-                                                Wazeer Azizan
+                                                {user?.data?.name}
                                             </span>
-                                            <span className="block text-xs font-medium text-stone-500">Full Stack Developer</span>
+                                            <span className="block text-xs font-medium text-stone-500">{user?.data?.role?.name}</span>
                                         </span>
                                 <span className="h-12 w-12 rounded-full">
                                             <img src="https://demo.tailadmin.com/src/images/user/user-01.png" alt="Avatar" />
